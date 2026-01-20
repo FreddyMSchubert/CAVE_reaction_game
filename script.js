@@ -127,12 +127,12 @@ function objectClicked(event, color, shape) {
 
 	if (team1Shape && color === team1Shape.color.description && shape === team1Shape.shape.description) {
 		team1Score++;
-		fireworkAt(cx, cy); // 🎆 boom at that shape
+		fireworkAt(cx, cy);
 		pickShapeForTeam(1);
 		new Audio('https://minecraft.wiki/images/Firework_twinkle.ogg?fbf09&format=original').play();
 	} else if (team2Shape && color === team2Shape.color.description && shape === team2Shape.shape.description) {
 		team2Score++;
-		fireworkAt(cx, cy); // 🎆 boom at that shape
+		fireworkAt(cx, cy);
 		pickShapeForTeam(2);
 		new Audio('https://minecraft.wiki/images/Firework_launch.ogg?b8551&format=original').play();
 	} else {
@@ -142,7 +142,6 @@ function objectClicked(event, color, shape) {
 
 let prevPositions = [];
 shapesArray.forEach(s => {
-	// add the shapes
 	let path = "";
 	switch (s.shape) {
 		case Shapes.CIRCLE: path = "./assets/shapes/circle.png"; break;
@@ -155,7 +154,7 @@ shapesArray.forEach(s => {
 		case Shapes.CROSS: path = "./assets/shapes/cross.png"; break;
 		default: path = "./assets/shapes/default.png"; break;
 	};
-	let randomSize = Math.floor(Math.random() * 50) + 30; // size between 30 and 80
+	let randomSize = Math.floor(Math.random() * 50) + 30;
 	let randomPosX, randomPosY;
 	do {
 	randomPosX = Math.floor(Math.random() * (window.innerWidth - randomSize));
@@ -163,7 +162,7 @@ shapesArray.forEach(s => {
 	} while (prevPositions.some(pos => Math.abs(pos.x - randomPosX) < 80 && Math.abs(pos.y - randomPosY) < 80));
 	prevPositions.push({x: randomPosX, y: randomPosY});
 
-	const randomRotation = Math.floor(Math.random() * 360); // 0..359
+	const randomRotation = Math.floor(Math.random() * 360);
 	canvas.insertAdjacentHTML(
 		"beforeend",
 		`<img src="${path}"
@@ -175,8 +174,7 @@ shapesArray.forEach(s => {
 	);
 });
 
-// ---------------- TIMER (COUNTDOWN) ----------------
-let timeLeft = 60; // seconds
+let timeLeft = 60;
 let gameOver = false;
 
 function formatTime(seconds) {
@@ -186,11 +184,9 @@ function formatTime(seconds) {
 }
 
 function bigExplosion() {
-	// center of screen
 	const cx = window.innerWidth / 2;
 	const cy = window.innerHeight / 2;
 
-	// multiple bursts around center
 	for (let i = 0; i < 12; i++) {
 		const angle = (Math.PI * 2 * i) / 12;
 		const radius = 180;
@@ -201,7 +197,6 @@ function bigExplosion() {
 		fireworkAt(x, y);
 	}
 
-	// a few extra right in the middle
 	for (let i = 0; i < 6; i++) {
 		setTimeout(() => fireworkAt(cx, cy), i * 120);
 	}
@@ -224,7 +219,6 @@ function endGame() {
 	}, 2500);
 }
 
-// update UI once immediately
 document.getElementById("timer").innerText = `Time: ${formatTime(timeLeft)}`;
 document.getElementById("team1score").innerText = `${team1Score}`;
 document.getElementById("team2score").innerText = `${team2Score}`;
